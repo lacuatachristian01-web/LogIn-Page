@@ -14,6 +14,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const signInForm = document.getElementById('signInForm');
     const signUpForm = document.getElementById('signUpForm');
+    const showcasePanel = document.querySelector('.showcase-panel');
+    const tabHeader = document.querySelector('.tab-header');
+    const formFooter = document.querySelector('.form-footer');
     
     const authCard = document.getElementById('authCard');
     const dashboardPreview = document.getElementById('dashboardPreview');
@@ -24,6 +27,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const openForgotModal = document.getElementById('openForgotModal');
     const closeForgotModal = document.getElementById('closeForgotModal');
     const forgotForm = document.getElementById('forgotForm');
+
+    const demoUsername = 'Christian Lacuata';
+    const demoPassword = '123456';
+    const signInEmailInput = document.getElementById('signin-email');
+    const signInPasswordInput = document.getElementById('signin-password');
+    const signInAlert = document.getElementById('signin-alert');
 
     // Theme Toggle Functionality
     themeToggle.addEventListener('click', () => {
@@ -126,14 +135,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // Reset errors
         clearInputError(emailInput);
         clearInputError(passwordInput);
+        hideSignInAlert();
 
-        if (!validateEmail(emailInput.value)) {
-            setInputError(emailInput, 'Please enter a valid email address');
-            isValid = false;
-        }
-
-        if (passwordInput.value.trim() === '') {
-            setInputError(passwordInput, 'Password is required');
+        if (emailInput.value.trim() === '' || passwordInput.value.trim() === '' || emailInput.value.trim().toLowerCase() !== demoUsername.toLowerCase() || passwordInput.value.trim() !== demoPassword) {
+            showSignInAlert('Username and Password is Incorrect! Please Try Again');
             isValid = false;
         }
 
@@ -208,7 +213,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function clearInputError(input) {
         const group = input.closest('.input-group');
-        group.classList.remove('invalid');
+        if (group) group.classList.remove('invalid');
+    }
+
+    function showSignInAlert(message) {
+        if (signInAlert) {
+            signInAlert.textContent = message;
+            signInAlert.classList.remove('hidden');
+        }
+    }
+
+    function hideSignInAlert() {
+        if (signInAlert) {
+            signInAlert.textContent = '';
+            signInAlert.classList.add('hidden');
+        }
     }
 
     // Modal Operations
@@ -238,14 +257,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Dashboard Simulation Transition
     function showDashboard(userIdentifier) {
-        authCard.style.display = 'none';
+        authCard.classList.add('logged-in');
+        showcasePanel.classList.remove('hidden');
+        tabHeader.classList.add('hidden');
+        formFooter.classList.add('hidden');
         dashboardPreview.classList.remove('hidden');
         welcomeUserMsg.textContent = `Logged in as: ${userIdentifier}`;
     }
 
     logoutBtn.addEventListener('click', () => {
+        authCard.classList.remove('logged-in');
+        showcasePanel.classList.add('hidden');
+        tabHeader.classList.remove('hidden');
+        formFooter.classList.remove('hidden');
         dashboardPreview.classList.add('hidden');
-        authCard.style.display = 'grid';
+        switchTab('signin');
         showToast('Logged out successfully', 'info');
     });
 
