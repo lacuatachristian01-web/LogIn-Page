@@ -14,6 +14,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const signInForm = document.getElementById('signInForm');
     const signUpForm = document.getElementById('signUpForm');
+    const paneHeader = document.getElementById('paneHeader');
+    const paneHeading = paneHeader.querySelector('h2');
+    const paneSubtext = paneHeader.querySelector('p');
     const showcasePanel = document.querySelector('.showcase-panel');
     const tabHeader = document.querySelector('.tab-header');
     const formFooter = document.querySelector('.form-footer');
@@ -58,12 +61,16 @@ document.addEventListener('DOMContentLoaded', () => {
             tabIndicator.style.transform = 'translateX(0%)';
             signInForm.classList.add('active');
             signUpForm.classList.remove('active');
+            paneHeading.textContent = 'Welcome back';
+            paneSubtext.textContent = 'Enter your details to access your account';
         } else {
             tabSignUp.classList.add('active');
             tabSignIn.classList.remove('active');
             tabIndicator.style.transform = 'translateX(100%)';
             signUpForm.classList.add('active');
             signInForm.classList.remove('active');
+            paneHeading.textContent = 'Create an Account';
+            paneSubtext.textContent = 'Start your 14-day free trial, no credit card required.';
         }
     }
 
