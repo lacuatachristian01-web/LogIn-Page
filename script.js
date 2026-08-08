@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const formFooter = document.querySelector('.form-footer');
     
     const authCard = document.getElementById('authCard');
+    const cardGlowWrapper = document.querySelector('.card-glow-wrapper');
     const dashboardPreview = document.getElementById('dashboardPreview');
     const welcomeUserMsg = document.getElementById('welcomeUserMsg');
     const logoutBtn = document.getElementById('logoutBtn');
@@ -265,6 +266,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Dashboard Simulation Transition
     function showDashboard(userIdentifier) {
         authCard.classList.add('logged-in');
+        cardGlowWrapper.classList.add('logged-in');
         showcasePanel.classList.remove('hidden');
         tabHeader.classList.add('hidden');
         formFooter.classList.add('hidden');
@@ -274,6 +276,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     logoutBtn.addEventListener('click', () => {
         authCard.classList.remove('logged-in');
+        cardGlowWrapper.classList.remove('logged-in');
         showcasePanel.classList.add('hidden');
         tabHeader.classList.remove('hidden');
         formFooter.classList.remove('hidden');
