@@ -154,6 +154,7 @@
     background:rgba(230,56,136,0.06);
   }
   .field.has-error input{ border-color:#FF6B6B; }
+  .field.invalid input{ border-color:#FF6B6B; }
   .field-error{
     display:none;
     color:#FF9494;
@@ -322,7 +323,7 @@
   <main class="card">
     <div class="mark">
       <div class="mark-dot"></div>
-      <span>Pitaya</span>
+      <span>Rhoan</span>
     </div>
 
     <!-- SIGN IN SCREEN -->
@@ -434,6 +435,7 @@
     showToast._t = setTimeout(() => toast.classList.remove('show'), 2600);
   }
   function setError(field, on){ field.classList.toggle('has-error', on); }
+  function setInvalid(field, on){ field.classList.toggle('invalid', on); }
 
   function showScreen(id){
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -460,8 +462,8 @@
       : '<path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/>';
   });
 
-  usernameInput.addEventListener('input', () => setError(userField, false));
-  passwordInput.addEventListener('input', () => setError(pwField, false));
+  usernameInput.addEventListener('input', () => { setError(userField, false); setInvalid(userField, false); });
+  passwordInput.addEventListener('input', () => { setError(pwField, false); setInvalid(pwField, false); });
 
   loginForm.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -484,10 +486,6 @@
         showScreen('successScreen');
         showToast('Signed in successfully');
       } else {
-        document.getElementById('userError').textContent = 'Incorrect username or password';
-        document.getElementById('pwError').textContent = 'Incorrect username or password';
-        setError(userField, true);
-        setError(pwField, true);
         showToast('Incorrect username or password');
       }
     }, 700);
